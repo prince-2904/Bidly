@@ -1,15 +1,13 @@
-// api/_lib/firebase.js
+// api/_lib/firebase.cjs
 
-import admin from 'firebase-admin';
+const admin = require('firebase-admin');
 
-// Check if the app is already initialized to prevent errors during hot-reloads
 if (!admin.apps.length) {
   try {
     admin.initializeApp({
       credential: admin.credential.cert({
         projectId: process.env.FIREBASE_PROJECT_ID,
         clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        // Vercel handles multiline env vars, but local might need replacement
         privateKey: (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
       }),
     });
@@ -19,5 +17,8 @@ if (!admin.apps.length) {
   }
 }
 
-export const db = admin.firestore();
-export const FieldValue = admin.firestore.FieldValue; 
+// module.exports se export karein
+module.exports = {
+  db: admin.firestore(),
+  FieldValue: admin.firestore.FieldValue,
+};
