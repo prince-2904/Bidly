@@ -28,7 +28,7 @@
     "three": "^0.185.1",
     "three-globe": "^2.45.2",
     "topojson-client": "^3.1.0",
-    "vite": "^6.2.3"
+    "vite": "^6.2.3",
     "got": "^14.4.5",
 "metascraper": "^5.49.0",
 "metascraper-author": "^5.49.0",
