@@ -1,9 +1,9 @@
-// api/products/preview.js
+// api/products/preview.cjs
 
-// Dynamic import for 'got' as it's an ESM module
-const got = (...args) => import('got').then(({ default: got }) => got(...args));
+// 'got' ko CJS style mein require karein
+const got = require('got');
 
-// Yahan se 'metascraper-clear-url' hata diya gaya hai
+// Metascraper ko require karein
 const metascraper = require('metascraper')([
   require('metascraper-author')(),
   require('metascraper-date')(),
@@ -15,9 +15,9 @@ const metascraper = require('metascraper')([
   require('metascraper-url')(),
 ]);
 
-export default async function handler(req, res) {
-  // Allow CORS for your frontend domain in production
-  res.setHeader('Access-Control-Allow-Origin', '*'); // For testing, '*' is fine. For production, use 'https://your-domain.com'
+// 'export default' ki jagah 'module.exports' use karein
+module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -29,6 +29,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, error: 'Method Not Allowed' });
   }
 
+  // Check for body existence before destructuring
+  if (!req.body) {
+    return res.status(400).json({ success: false, error: 'Request body is missing.' });
+  }
+
   const { url } = req.body;
 
   if (!url) {
@@ -36,7 +41,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { body: html, url: targetUrl } = await got(url, { timeout: { request: 5000 }});
+    const { body: html, url: targetUrl } = await got(url, { timeout: { request: 8000 }}); // Timeout thoda badha diya
     const metadata = await metascraper({ html, url: targetUrl });
 
     const productPreview = {
