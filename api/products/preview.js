@@ -3,15 +3,17 @@
 // Dynamic import for 'got' as it's an ESM module
 const got = (...args) => import('got').then(({ default: got }) => got(...args));
 
+// Yahan se 'metascraper-clear-url' hata diya gaya hai
 const metascraper = require('metascraper')([
+  require('metascraper-author')(),
+  require('metascraper-date')(),
   require('metascraper-description')(),
   require('metascraper-image')(),
   require('metascraper-logo')(),
-  require('metascraper-clear-url')(),
+  require('metascraper-publisher')(),
   require('metascraper-title')(),
   require('metascraper-url')(),
 ]);
-
 
 export default async function handler(req, res) {
   // Allow CORS for your frontend domain in production
