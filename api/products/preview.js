@@ -1,7 +1,8 @@
 // File: api/products/preview.js
 
-// Using require for CJS environment
-const got = require('got');
+// We will import 'got' dynamically
+// const got = require('got'); // This line is the problem, so it's removed.
+
 const metascraper = require('metascraper')([
     require('metascraper-description')(),
     require('metascraper-image')(),
@@ -11,9 +12,11 @@ const metascraper = require('metascraper')([
     require('metascraper-url')(),
 ]);
 
-// Standard Vercel handler export for CJS
 module.exports = async (req, res) => {
-    // Handling CORS for preflight requests
+    // Dynamic import for 'got'
+    // This is the fix for ERR_REQUIRE_ESM
+    const { default: got } = await import('got');
+
     if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Methods', 'POST');
@@ -21,14 +24,12 @@ module.exports = async (req, res) => {
         return res.status(204).send('');
     }
 
-    // Set CORS headers for the actual request
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     if (req.method !== 'POST') {
         return res.status(405).json({ success: false, error: 'Method Not Allowed' });
     }
-
-    // Check if body exists
+    
     if (!req.body) {
         return res.status(400).json({ success: false, error: 'Request body is missing.' });
     }
