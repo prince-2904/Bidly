@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-page: #07090e;
+    --bg-card: #0d1117;
+    --bg-card-subtle: #131a26;
+    --border-color: #1e2638;
+    --text-primary: #f1f5f9;
+    --text-muted: #94a3b8;
+    --accent-emerald: #0ea5e9;
+    --accent-sky: #0ea5e9;
+    --accent-gold: #f59e0b;
+    --accent-cyan: #38bdf8;
+  }
+
+  html.light {
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-card-subtle: #f1f5f9;
+    --border-color: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+    --accent-emerald: #0284c7;
+    --accent-sky: #0284c7;
+    --accent-gold: #d97706;
+    --accent-cyan: #0369a1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: clip;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', 'Lato', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Font Families */
+.font-lato {
+  font-family: 'Lato', system-ui, sans-serif;
+}
+
+.font-sans-pro {
+  font-family: 'Lato', system-ui, sans-serif;
+}
+
+.font-sora {
+  font-family: 'Sora', sans-serif;
+}
+
+.font-alt, .font-alternates {
+  font-family: 'Montserrat Alternates', 'Sora', sans-serif;
+}
+
+/* Terminal / telemetry labels updated to Lato as requested */
+.font-mono-terminal {
+  font-family: 'Lato', system-ui, sans-serif;
+}
+
+/* Rank Badge Specialized Styling */
+.rank-badge-gold {
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 50%, #b45309 100%);
+  color: #000000;
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid #fde68a;
+}
+
+.rank-badge-silver {
+  background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #94a3b8 100%);
+  color: #0f172a;
+  box-shadow: 0 0 12px rgba(203, 213, 225, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid #e2e8f0;
+}
+
+.rank-badge-bronze {
+  background: linear-gradient(135deg, #fdba74 0%, #ea580c 50%, #9a3412 100%);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(234, 88, 12, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  border: 1px solid #fed7aa;
+}
+
+/* Radar & Pulsing Keyframes */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.08); }
+}
+
+@keyframes ticker-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-radar {
+  animation: radar-sweep 12s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Sharp Card Styling */
+.wbw-sharp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.2);
+}
+
+.wbw-sharp-card-subtle {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+}
+
+/* Custom scrollbars (Desktop only) */
+@media (min-width: 769px) {
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 0;
+  }
+
+  html.light ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+}
+
+/* Hide scrollbars specifically on mobile devices */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  html, body, * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+}
+
+/* No-scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* GPU Hardware-Accelerated Rendering Layers & 90-120 FPS Performance */
+.gpu-layer {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 120px;
+}
+

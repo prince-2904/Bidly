@@ -1,0 +1,6 @@
+{
+  "name": "BidlyTerritory",
+  "description": "Global territory bidding engine across 195 sovereign nations where product visibility is won through transparent real-time bidding.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
